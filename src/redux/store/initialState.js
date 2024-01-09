@@ -5,6 +5,7 @@ const initialState = {
     },
     homes:{
         list: [],
+        hasNext: true
     },
     tags:{
         list:[]
