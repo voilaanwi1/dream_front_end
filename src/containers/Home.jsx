@@ -3,38 +3,37 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchHomes, clearHomes } from '../redux/homes/operations';
 import { getTags } from '../redux/tags/selectors';
 import { fetchTags } from '../redux/tags/operations';
-import {useHistory} from 'react-router';
 import MainImg from '../assets/img/background-main.png'
+import { gethomes } from '../redux/homes/selectors';
+import { MainImage } from '../components/common/MainImage';
+import { useNavigate } from 'react-router';
+
 const Home = ()=>{
     const dispatch = useDispatch();
     const selector  = useSelector(state=>state);
-    const homes = getHomes(selector);
-    const history = useHistory();
+    const homes = gethomes(selector);
     useEffect(() =>{
         dispatch(clearHomes());
         dispatch(fetchHomes())
     }, []);
     const tags = getTags(selector);
     const clickHome = homeId =>{
-        dispatch(history.push(`/preview/${homeId}/`))
+        dispatch(useNavigate(`/preview/${homeId}/`))
     };
     useEffect(()=>{
         dispatch(fetchTags());
-
     },[])
 
 
 return(
     <>
-
     <MainImage />
     <section className='option'>
         <h4>
             Whether you are buying, selling or renting, <br />
             we can help you move forward.
         </h4>
-        <ul className='icons'>{tags && tags.map(tag=> <CategoryCard tag={tag} />)}</ul>
-
+        
     </section>
     <section className='explore'>
         <div>
