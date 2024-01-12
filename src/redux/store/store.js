@@ -1,4 +1,4 @@
-import thunk from 'redux-thunk'
+import {thunk} from 'redux-thunk'
 import {homesReducer} from  '../homes/reducers'
 import { favoriteReducer } from '../favorites/reducers'
 import { tagsReducer } from '../tags/reducers'
