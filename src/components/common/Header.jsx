@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import { getUser } from "../../redux/users/selectors";
 import imageUseIcon from '../../assets/img/icon-user.svg'
 import { push } from 'connected-react-router';
-
+import {Option} from './Option'
 
 const key = localStorage.getItem('HOME_LOGIN_USER_KEY')
 

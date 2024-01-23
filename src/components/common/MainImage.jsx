@@ -11,7 +11,7 @@ export const MainImage = () => {
     const inputFind = (event) => {
         setSearch(event.target.value)
     }
-    const submitAction = (search) => {
+    const SubmitAction = (search) => {
         dispatch(useNavigate('/search/?search='+ search))
     }
     return(
@@ -20,7 +20,7 @@ export const MainImage = () => {
         <img src="./img/Group 33.png" alt="logo" width="150px" />
         <a href="./sigin.html">Sign Up/ Sign In</a><br />
         <input type="text" placeholder="Search" onChange={()=>inputFind()}/>
-        <img class="lens" src={SearchIcon} alt="" onClick={()=>submitAction(search)}/>
+        <img class="lens" src={SearchIcon} alt="" onClick={()=>SubmitAction(search)}/>
       </nav>
       <div class="home">
         <img src={mainBackGroundImage} alt="" class="homeimg" />

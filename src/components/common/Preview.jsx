@@ -24,15 +24,15 @@ const api = new API ()
         })
     },[])
 
-    const clickBack = ()=>{
-        dispatch(useNavigate())
+    const ClickBack = ()=>{
+        dispatch(useNavigate('/'))
 
     }
 
     return(
         <>
         <section className='preview'>
-            <div className='title' onClick={clickBack}>
+            <div className='title' onClick={ClickBack}>
                 <img src={icon_back} alt=""  className='back'/>
                 <button className='go_back' > Go back</button>
             </div>

@@ -25,7 +25,7 @@ export const signUp = (user_name,email,password) => {
         .then(user =>{
             dispatch(signUpAction(user));
             localStorage.setItem(LOGIN_USER_KEY, JSON.stringify(user));
-            dispatch(push('/'))
+            dispatch(useNavigate('/'))
         })
         .catch(error=>{
             alert('Failed to connect API to add a post')
@@ -62,6 +62,6 @@ export const signOut =()=>{
     return async dispatch=>{
         dispatch(signOutAction());
         localStorage.removeItem(LOGIN_USER_KEY);
-        dispatch(push('/signin'))
+        dispatch(useNavigate('/signin'))
     }
 }

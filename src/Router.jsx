@@ -1,10 +1,19 @@
 import React, {useEffect} from 'react'
-import {BrowserRouter as  Router,Routes, Route } from 'react-router'
+import {Router, Route, Routes } from 'react-router'
 import Home from './containers/Home'
 import { useDispatch, useSelector } from 'react-redux'
 import ThankYou from './containers/ThankYou'
 
-const Routes = () => {
+import Signin from './containers/SignIn'
+import SignUp from './containers/SignUp'
+import Search from './containers/Search'
+import Sale from './containers/Sale';
+import {Preview} from './components/common/Preview'
+import Saved from './containers/Saved'
+import { fetchUserFromLocalStorage } from './redux/users/operations'
+import { getUser } from './redux/users/selectors'
+
+const Routers = () => {
     const dispatch= useDispatch()
     const selector = useSelector(state => state)
     const user = getUser(selector)
@@ -33,4 +42,4 @@ const Routes = () => {
     
 }
 
-export default Routes;
+export default Routers;

@@ -17,7 +17,7 @@ const Home = ()=>{
         dispatch(fetchHomes())
     }, []);
     const tags = getTags(selector);
-    const clickHome = homeId =>{
+    const ClickHome = homeId =>{
         dispatch(useNavigate(`/preview/${homeId}/`))
     };
     useEffect(()=>{
@@ -48,7 +48,7 @@ return(
                             <div className='box-main'>
                                 <h1>{home.address}</h1>
                             </div>
-                            <button id ='vh' onClick={()=> clickHome(home.id)}>
+                            <button id ='vh' onClick={()=> ClickHome(home.id)}>
                                 View more</button>
                         </li>
                     ))}

@@ -6,6 +6,7 @@ import ImgFavIcon from '../../assets/img/icon-fav.svg'
 import {addFavorites, fetchFavorites} from '../../redux/favorites/operations'
 
 import {getFavorites} from '../../redux/favorites/selectors'
+import { useNavigate } from "react-router";
 
 
 function HomesCard({ home, favorite}){
@@ -16,8 +17,8 @@ function HomesCard({ home, favorite}){
         dispatch(fetchFavorites());
 
     };
-    const clickHome = homeId =>{
-        dispatch(push('/preview/' + homeId + '/'))
+    const ClickHome = homeId =>{
+        dispatch(useNavigate('/preview/' + homeId + '/'))
     };
     console.log('Home', home);
     console.log('Favorite', favorite);
@@ -35,7 +36,7 @@ function HomesCard({ home, favorite}){
                         clickSaved(home)
                     }} src={ImgFavIcon} alt="" />
                 )}
-                <img  onClick={()=>clickHome(home.id)} src={mainImg} alt="" />
+                <img  onClick={()=>ClickHome(home.id)} src={mainImg} alt="" />
                 <h3>{home.price}</h3>
                 <p>{home.layout} 1,800 sqft<br />
                 <br />
