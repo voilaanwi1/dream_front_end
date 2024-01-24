@@ -1,37 +1,40 @@
-import React,{userState} from "react";
-import { useDispatch } from "react-redux";
-import mainBackGroundImage from '../../assets/img/background-main.png'
-import { useNavigate } from "react-router";
-import SearchIcon  from  '../../assets/img/icon-search.svg'
+import React, { useState } from 'react';
+import ImageBackgroundMain from '../../assets/img/background-main.png';
+import ImgSearchIcon from '../../assets/img/icon-search.svg';
+import { useDispatch } from 'react-redux';
+import {useNavigate} from "react-router"
 
-export const MainImage = () => {
-    const dispatch = useDispatch()
-    const [search,setSearch]=userState()
+function MainImage() {
+    const dispatch = useDispatch();
+    const [search, setSearch] = useState();
+    const navigate = useNavigate()
 
-    const inputFind = (event) => {
-        setSearch(event.target.value)
-    }
-    const SubmitAction = (search) => {
-        dispatch(useNavigate('/search/?search='+ search))
-    }
-    return(
+    const inputFind = event => {
+        setSearch(event.target.value);
+    };
+
+    const submitAction = search => {
+        navigate('/search/?search=' + search);
+    };
+    return (
         <>
-        <nav class="navbar">
-        <img src="./img/Group 33.png" alt="logo" width="150px" />
-        <a href="./sigin.html">Sign Up/ Sign In</a><br />
-        <input type="text" placeholder="Search" onChange={()=>inputFind()}/>
-        <img class="lens" src={SearchIcon} alt="" onClick={()=>SubmitAction(search)}/>
-      </nav>
-      <div class="home">
-        <img src={mainBackGroundImage} alt="" class="homeimg" />
-      </div>
-      <div class="contentimg">
-        <h1>Discover a place<br />you'll love to live</h1>
-        <p>
-          Check out the latest homes<br />
-          based on your personal prefereces
-        </p>
-      </div>
+            <section class="main">
+                <img class="background" src={ImageBackgroundMain} alt="" />
+                <div class="search">
+                    <img id="search-mag" onClick={() => submitAction(search)} src={ImgSearchIcon} alt="" />
+                    <input onChange={inputFind} type="text" name="" placeholder="Address, city or state" id="search" />
+                </div>
+                <article class="text">
+                    <h1>
+                        Discover a place <br /> you’ll love to live
+                    </h1>
+                    <h4>
+                        Check out the latest homes <br /> based on your personal preferences.
+                    </h4>
+                </article>
+            </section>
         </>
-    )
+    );
 }
+
+export default MainImage;

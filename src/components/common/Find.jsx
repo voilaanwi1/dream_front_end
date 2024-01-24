@@ -1,39 +1,39 @@
-import React,{useState,useEffect} from "react";
-import { useDispatch } from "react-redux";
-import imgSearchIcon from '../../assets/img/icon-search.svg'
-import { push } from "connected-react-router";
-
+import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import ImgSearchIcon from '../../assets/img/icon-search.svg';
+import {useNavigate} from "react-router"
 
 const Find = () => {
-    const [showSearchBar, setSearchBar] = useState(false)
-    const dispatch = useDispatch()
-    const [search, setSearch] = useState()
-    let pageURL = window.location.toString()
+    const [showSearchBar, setSearchBar] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const [search, setSearch] = useState();
+    let pageURL = window.location.toString();
+
     const inputFind = event => {
-        setSearch(event.target.value)
-    }
-    const submitAction = search => {
-        dispatch(push('/search/?search=' + search))
+        setSearch(event.target.value);
     };
 
-    useEffect(()=>{
-        if ( pageURL.includes('search') || pageURL.includes('preview') || pageURL.includes('sale')) {
+    const submitAction = search => {
+        navigate('/search/?search=' + search);
+    };
+
+    useEffect(() => {
+        if (pageURL.includes('search') || pageURL.includes('preview') || pageURL.includes('sale')) {
             setSearchBar(true);
         }
-      
     }, []);
 
-    return(
+    return (
         <div>
-            {showSearchBar&&(
-                <div className="search">
-                    <img onClick={() => submitAction(search)} src={imgSearchIcon} />
-                    <input type="text" onChange={inputFind} placeholder="address,city or state" id="search" autoComplete="false"/>
-                    </div>
+            {showSearchBar && (
+                <div class="search">
+                    <img onClick={() => submitAction(search)} src={ImgSearchIcon} alt="" />
+                    <input type="text" onChange={inputFind} name="" placeholder="Address, city or state" id="search" autocomplete="false"/>
+                </div>
             )}
         </div>
-    )
-
-}
+    );
+};
 
 export default Find;

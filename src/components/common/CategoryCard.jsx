@@ -1,30 +1,28 @@
-import React from 'react'
-import { useDispatch } from 'react-redux'
-import { push } from 'connected-react-router'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import {useNavigate} from "react-router"
 
-export default CategoryCard = ({tag}) =>{
-    const dispatch = useDispatch()
-    const key = localStorage.getItem('HOME_LOGIN_USER_KEY')
-    const pushToTag = tagId => {
+export default function CategoryCard({ tag }) {
+    const navigate = useNavigate()
+    const key = localStorage.getItem('HOME_LOGIN_USER_KEY');
+    const pushTotag = tagId => {
         if (key) {
             if (tag.type === 'Sell') {
-                dispatch(push('/sale'))
-            } else{
-                dispatch(push(`/search?tag_id=${tagId}&tag_type=${tag.type}`));
+                navigate('/sale');
+            } else {
+                navigate(`/search?tag_id=${tagId}&tag_type=${tag.type}`);
             }
-        } else{
-            dispatch(push('/signup'))
+        } else {
+            navigate('/signup');
         }
     };
 
-
-    return(
-        <li className='home' key={tag.id}>
+    return (
+        <li class="home" key={tag.id}>
             <img src={tag.image} alt="" />
             <h1>{tag.name}</h1>
             <p>{tag.description}</p>
-            <button onClick={()=>pushToTag(tag.id)}>Search Homes</button>
-
+            <button onClick={() => pushTotag(tag.id)}>{tag.type} homes</button>
         </li>
-    )
+    );
 }

@@ -1,51 +1,56 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Push } from "connected-react-router";
-import mainImg from '../../assets/img/background-main.png'
-import ImgFavIcon from '../../assets/img/icon-fav.svg'
-import {addFavorites, fetchFavorites} from '../../redux/favorites/operations'
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {useNavigate} from "react-router"
+import ImgFavIcon from '../../assets/img/icon-fav.svg';
+import { addFavourites, fetchFavourites } from '../../reducks/favoutite/operations';
+import { getFavourites } from '../../reducks/favoutite/selectors';
 
-import {getFavorites} from '../../redux/favorites/selectors'
-import { useNavigate } from "react-router";
-
-
-function HomesCard({ home, favorite}){
+function HomesCard({ home, favourite }) {
     const dispatch = useDispatch();
-    const selector = useSelector(state=>state);
-    const clickSaved = home =>{
-        dispatch(addFavorites({ home: home.id}));
-        dispatch(fetchFavorites());
-
+    const navigate = useNavigate()
+    const selector = useSelector(state => state);
+    const clickSaved = home => {
+        dispatch(addFavourites({ home: home.id }));
+        dispatch(fetchFavourites());
     };
-    const ClickHome = homeId =>{
-        dispatch(useNavigate('/preview/' + homeId + '/'))
+    const clickHome = homeId => {
+        navigate('/preview/' + homeId + '/');
     };
     console.log('Home', home);
-    console.log('Favorite', favorite);
-
-    return(
+    console.log('Favourite', favourite);
+    return (
         <div>
-            <li key={home.id} className="box">
+            <li key={home.id} class="box">
                 {home &&
-                favorite &&
-                Object.values(favorite).filter(favoriteHome=>{
-                    console.log('home', favoriteHome);
-                    return home.id === favoriteHome.home.id
-                }).length===0 &&(
-                    <img  className="fav" onClick={()=>{
-                        clickSaved(home)
-                    }} src={ImgFavIcon} alt="" />
-                )}
-                <img  onClick={()=>ClickHome(home.id)} src={mainImg} alt="" />
-                <h3>{home.price}</h3>
-                <p>{home.layout} 1,800 sqft<br />
-                <br />
-                {home.state}, {home.address}
-                </p>
+                    favourite &&
+                    Object.values(favourite).filter(favouriteHome => {
+                        console.log('sdasd', favouriteHome);
+                        return home.id === favouriteHome.home.id;
+                    }).length === 0 && (
+                        <img
+                            class="fav"
+                            onClick={() => {
+                                clickSaved(home);
+                            }}
+                            src={ImgFavIcon}
+                            alt=""
+                        />
+                    )}
+                <img
+                    onClick={() => clickHome(home.id)}
+                    src={'https://res.cloudinary.com/dwzjr9dg5/' + home.main_image}
+                    alt=""
+                />
 
+                <h3>${home.price}</h3>
+                <p>
+                    {home.layout} 1,800 sqft <br />
+                    <br />
+                    {home.state}, {home.address}
+                </p>
             </li>
         </div>
-    )
+    );
 }
 
 export default HomesCard;
