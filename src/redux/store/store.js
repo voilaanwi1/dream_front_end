@@ -16,6 +16,6 @@ export default function createStore(history) {
             tags : tagsReducer, 
             user : userReducer
         }), 
-        composeWithDevTools(applyMiddleware(thunk))
+        applyMiddleware(thunk)
     )
 }
