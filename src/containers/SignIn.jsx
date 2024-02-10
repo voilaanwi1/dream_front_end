@@ -1,66 +1,78 @@
-import React,{useState} from "react";
-import { useDispatch,useSelector } from "react-redux";
-import { signIn } from "../redux/users/operations";
-import img_logo from '../assets/img/icon-logo.svg'
-import img_close_icon from '../assets/img/icon-close.svg'
-import { MainImage } from "../components/common/MainImage";
-import { getUser } from "../redux/users/selectors";
-import { useNavigate } from "react-router";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { signIn } from '../reducks/users/operations';
+import ImgLogoIcon from '../assets/img/icon-logo.svg';
+import ImgCloseIcon from '../assets/img/icon-close.svg';
+import MainImage from '../components/Common/MainImage';
+import { useHistory, useNavigate } from 'react-router';
+import { getUser } from '../reducks/users/selectors';
 
+function Signin() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+    const selector = useSelector(state => state);
+    const errors = getUser(selector).errors;
 
-const SignIn = ()=> {
-    const dispatch=useDispatch()
-    const navigate = useNavigate();
-    const selector= useSelector(state => state)
-    const errors = getUser(selector).errors
     const initialValues = {
-        email:'',
-        password:''
+        email: '',
+        password: ''
+    };
 
-    }
+    const [values, setValues] = useState(initialValues);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const [values,setValues] = useState(initialValues)
-    const [isLoading,setIsLoading]= useState(false)
-    const handleInputChange= e=> {
-        const {name,value} = e.target
+    const handleInputChange = e => {
+        const { name, value } = e.target;
+
         setValues({
             ...values,
-            [name]:value
-        })
-    }
-    const signInButton = async()=>{
-        setIsLoading(true)
-        await dispatch(signIn(values,()=> navigate('/')))
-        setIsLoading(false)
-    }
-    const CloseButton = () => {
-        navigate('/')
+            [name]: value
+        });
+    };
 
-    }
-    return(
+    const signInButton = async () => {
+        setIsLoading(true);
+        await dispatch(signIn(values, () => navigate('/')));
+        setIsLoading(false);
+        //navigate('/sign');
+    };
+
+    const closeButton = () => {
+        dispatch(() => navigate('/'));
+    };
+
+    return (
         <div>
-            <MainImage/>
-            <div className="main2">
-                <div className="signin">
-                    <img src={img_close_icon} alt=""  onClick={CloseButton} className="close"/>
-                    <img src={img_logo} alt=""  className="logo"/>
-                    <p className="head">Sign in</p>
+            <MainImage />
+            <div class="main2">
+                <div class="signin">
+                    <img onClick={closeButton} class="close" src={ImgCloseIcon} alt="" />
+                    <img class="logo" src={ImgLogoIcon} alt="" />
+                    <p class="head">Sign in</p>
                     <p>Email</p>
-                    <input type="email" name="email" placeholder="Type your email" value={values.email}
-                    onChange={handleInputChange}/>
+                    <input
+                        placeholder="Type your email"
+                        name="email"
+                        type="email"
+                        value={values.email}
+                        onChange={handleInputChange}
+                    />
                     <p>Password</p>
-                    <input type="password" name="password" placeholder="Enter your password"
-                    value={values.password} onChange={handleInputChange}/>
-                    <button type="button" onClick={signInButton}>{`${isLoading?'loggin':'login'}`}</button>
-                    <a href="/signup" className="joinus">JOIN US</a>
-                    
-
-
+                    <input
+                        placeholder="Type your password"
+                        name="password"
+                        type="password"
+                        value={values.password}
+                        onChange={handleInputChange}
+                    />
+                    <button type="button" onClick={signInButton}>{`${isLoading ? 'Logging In' : 'Login'}`}</button>
+                    <a class="joinus" href="/signup">
+                        JOIN US
+                    </a>
                 </div>
-
             </div>
         </div>
-    )
-    
+    );
 }
-    export default SignIn;
+
+export default Signin;

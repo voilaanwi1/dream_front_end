@@ -1,46 +1,55 @@
-import React,{useEffect} from "react";
-import { useDispatch,useSelector } from "react-redux";
-import { getFavorites } from "../redux/favorites/selectors";
-import { gethomes } from "../redux/homes/selectors";
-import { deleteOperationFavorites } from "../redux/favorites/operations";
-import { fetchFavorites } from "../redux/favorites/operations";
-import img_fav_icon from '../assets/img/icon-fav.svg'
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getFavourites } from '../reducks/favoutite/selectors';
+import { getHomes } from '../reducks/homes/selectors';
+import { deleteFavourites } from '../reducks/favoutite/operations';
+import { fetchFavourites } from '../reducks/favoutite/operations';
+import ImgFavIcon from '../assets/img/icon-fav.svg';
+import {useNavigate} from "react-router"
 
-import mainImage from '../assets/img/background-main.png'
-
-const Saved = ()=>{
-    const dispatch = useDispatch()
-    const selector = useSelector(state => state)
-    const favorites=getFavorites(selector)
-    useEffect(()=>{
-        dispatch(fetchFavorites())
-
-    }, [])
-
-    return(
+const Saved = () => {
+    const dispatch = useDispatch();
+    const selector = useSelector(state => state);
+    const favourites = getFavourites(selector);
+    console.log('dsdsd', favourites);
+    useEffect(() => {
+        dispatch(fetchFavourites());
+    }, []);
+    return (
         <div>
-            <section className="buy">
-                <div className="head">
-                    <h4>Saved houses</h4>
-                    <ul className="images">
-                        {favorites && favorites.map(favorite=>(
-                            <li className="box">
-                                <img src={img_fav_icon} alt=""  className="fav" onClick={()=>{
-                                    dispatch(deleteOperationFavorites(favorite.id))
-                                }}/>
-                                <img src={mainImage} alt="" />
-                                    <h3>{favorite.price}</h3>
-                                    <p>{favorite.home.layout} 1800 sqft
-                                    <br />
-                                    {favorite.home.state},{favorite.home.address}
+            <section class="buy">
+                <div class="head">
+                    <h4>Saved Houses</h4>
+                    <ul class="images">
+                        {favourites &&
+                            favourites.map(favourite => (
+                                <li class="box">
+                                    <img
+                                        class="fav"
+                                        onClick={() => {
+                                            dispatch(deleteFavourites(favourite.id));
+                                        }}
+                                        src={ImgFavIcon}
+                                        alt=""
+                                    />
+                                    <img
+                                        src={'https://res.cloudinary.com/dwzjr9dg5/' + favourite.home.main_image}
+                                        alt=""
+                                    />
+                                    {console.log(favourite.home.main_image)}
+                                    <h3>{favourite.price}</h3>
+                                    <p>
+                                        {favourite.home.layout} 1,800 sqft <br />
+                                        <br />
+                                        {favourite.home.state}, {favourite.home.address}
                                     </p>
-                            </li>
-                        ))}
+                                </li>
+                            ))}
                     </ul>
                 </div>
             </section>
-
         </div>
-    )
-}
+    );
+};
+
 export default Saved;

@@ -1,89 +1,108 @@
-import React from 'react'
-import { useState,useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router'
-import API from '../../API'
-import { useParams } from 'react-router'
-import icon_back from '../../assets/img/icon-back.svg'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import API from '../../API';
+import ImgIconBack from '../../assets/img/icon-back.svg';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
+import {useNavigate} from "react-router"
 
-const api = new API ()
- export const Preview = () => {
-    const {id} = useParams()
-    const[home, setHome] = useState(null)
-    const dispatch = useDispatch()
+const api = new API();
 
-    useEffect(()=>{
+function Preview() {
+    const { id } = useParams();
+    const [home, setHome] = useState(null);
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+
+    useEffect(() => {
         api.getHome(id)
-        .then(home =>{
-            setHome(home)
-        })
-        .catch(error => {
-            alert('failed to connect api:/house/:id/')
+            .then((homeData) => {
+                setHome(homeData);
+            })
+            .catch((error) => {
+                alert('Failed to connect API: /house/:id/');
+            });
+    }, [id]);
 
-        })
-    },[])
+    const clickback = () => {
+        navigate('/');
+    };
 
-    const ClickBack = ()=>{
-        dispatch(useNavigate('/'))
-
-    }
-
-    return(
-        <>
-        <section className='preview'>
-            <div className='title' onClick={ClickBack}>
-                <img src={icon_back} alt=""  className='back'/>
-                <button className='go_back' > Go back</button>
-            </div>
-
-            <div>
+    return (
+        <div className='prev'>
+            <section className="preview">
+                <div className="title" onClick={clickback}>
+                    <img className="back" src={ImgIconBack} alt="" />
+                    <button>Go back</button>
+                </div>
+                <div>
+                    {home && home.main_image && (
+                        <img
+                            className="main_image"
+                            src={`https://res.cloudinary.com/dwzjr9dg5/${home.main_image}`}
+                            alt=""
+                        />
+                    )}
+                    {home && home.sub_image1 && (
+                        <div className="multi-images">
+                            {home.sub_image1 && (
+                                <img
+                                    className="sub_image"
+                                    src={`https://res.cloudinary.com/dwzjr9dg5/${home.sub_image1}`}
+                                    alt=""
+                                />
+                            )}
+                            {home.sub_image2 && (
+                                <img
+                                    className="sub_image"
+                                    src={`https://res.cloudinary.com/dwzjr9dg5/${home.sub_image2}`}
+                                    alt=""
+                                />
+                            )}
+                            {home.sub_image3 && (
+                                <img
+                                    className="sub_image"
+                                    src={`https://res.cloudinary.com/dwzjr9dg5/${home.sub_image3}`}
+                                    alt=""
+                                />
+                            )}
+                            {home.sub_image4 && (
+                                <img
+                                    className="sub_image"
+                                    src={`https://res.cloudinary.com/dwzjr9dg5/${home.sub_image4}`}
+                                    alt=""
+                                />
+                            )}
+                        </div>
+                    )}
+                </div>
                 {home && (
-                    <img className='mainImage' src={home.main_image}/>
-                )}
-                {home && (
-                    <div className='multi_images'>
-                        <img src={home.sub_image1} alt=""  className='sub_image'/>
-                        <img src={home.sub_image2} alt=""  className='sub_image'/>
-                        <img src={home.sub_image3} alt=""  className='sub_image'/>
-                        <img src={home.sub_image4} alt=""  className='sub_image'/>
-                    </div>
-                )}
-            </div>
-            {
-                home && (
                     <table>
-                        <tr className='table-head'>
-                            <th>
-                                {home.address}
-                            </th>
-                            <td>
-                                ${home.price}
-                            </td>
-                        </tr>
-                        <tr className=''>
-                            <th>
-                                {home.state}
-                            </th>
-                            <td>
-                               Est mortgage ${home.rent_price}/mo*
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>
-                                {home.layout}
-                            </th>
-                            <td>
-                                <button className='gc'>
-                                    <Link to='/'>Get contact</Link>
-                                </button>
-                            </td>
-
-                        </tr>
+                        <tbody>
+                            <tr className="table-head">
+                                <th>{home.address}</th>
+                                <td>${home.price}</td>
+                            </tr>
+                            <tr>
+                                <th>{home.state}</th>
+                                <td>
+                                    Est. mortgage {home.rent_price ? `$${home.rent_price}/mo*` : ''}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <td>
+                                    <button className="gc">
+                                        {' '}
+                                        <a href="/">Get Contact</a>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
-                )
-            }
-        </section>
-        </>
-    )
- }
+                )}
+            </section>
+        </div>
+    );
+}
+
+export default Preview;
